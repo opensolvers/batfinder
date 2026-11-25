@@ -1,0 +1,18 @@
+[Unit]
+Description=BattyBirdNET listener on the Vleermic
+After=sound.target
+
+[Service]
+Type=simple
+User=eessi
+Group=eessi
+SupplementaryGroups=audio
+WorkingDirectory=/home/eessi/battybirdnet
+ExecStart=/usr/bin/python3 -u /home/eessi/battybirdnet/listen.py
+Restart=on-failure
+RestartSec=5
+StartLimitIntervalSec=0
+Nice=10
+
+[Install]
+WantedBy=multi-user.target

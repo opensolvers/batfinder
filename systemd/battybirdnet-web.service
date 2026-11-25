@@ -1,0 +1,15 @@
+[Unit]
+Description=BattyBirdNET overview page
+After=network.target
+
+[Service]
+Type=simple
+User=eessi
+Group=eessi
+WorkingDirectory=/home/eessi/battybirdnet
+ExecStart=/usr/bin/python3 -u /home/eessi/battybirdnet/web.py
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

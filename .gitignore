@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+overview.json
+overview.json.tmp
+hits.log
+*.onnx
+BattyBirdNET-EU-256kHz_Labels.txt
