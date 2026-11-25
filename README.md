@@ -1,14 +1,14 @@
 # Batfinder
 
-Luisteraar voor de Vleermic op de Banana Pi SM10. BattyBirdNET scoort de microfoon, een kleine pagina toont wat er gehoord is.
+Listener for the Vleermic on the Banana Pi SM10. BattyBirdNET scores the microphone, and a small page shows what was heard.
 
-`listen.py` neemt op via ALSA op 384 kHz, zet dat met soxr om naar 256 kHz en scoort vensters van 144.000 samples (0,56 s) met de BirdNET v2.4-backbone en de EU-kop. ONNX Runtime gebruikt `CPUExecutionProvider`. `web.py` leest `overview.json` en serveert de pagina op poort 8090.
+`listen.py` records with ALSA at 384 kHz, resamples to 256 kHz with soxr, and scores windows of 144,000 samples (0.56 s) with the BirdNET v2.4 backbone and the EU head. ONNX Runtime uses `CPUExecutionProvider`. `web.py` reads `overview.json` and serves the page on port 8090.
 
-Een soortnaam verschijnt vanaf 10%. Een bevestiging is vijf vensters achter elkaar van dezelfde soort op 50% of hoger, ongeveer 2,3 seconde. De microfoon heet `hw:VleermicUSB384k,0` en levert alleen 384 kHz, 16-bit, mono.
+A species name is shown from 10% upward. A confirmation is five windows in a row of the same species at 50% or higher, about 2.3 seconds. The microphone is `hw:VleermicUSB384k,0` and accepts only 384 kHz, 16-bit, mono.
 
-## Modellen
+## Models
 
-De gewichten staan niet in deze repo. Ze vallen onder CC BY-NC-SA 4.0. BirdNET moet genoemd worden waar de modellen gebruikt worden.
+The weights are not in this repo. They are CC BY-NC-SA 4.0. Credit BirdNET wherever the models are used.
 
 ```bash
 cd /home/eessi/battybirdnet
@@ -20,9 +20,9 @@ curl -L -o BattyBirdNET-EU-256kHz_Labels.txt \
   https://huggingface.co/tphakala/BattyBirdNET-onnx/resolve/main/labels/BattyBirdNET-EU-256kHz_Labels.txt
 ```
 
-## Installatie
+## Install
 
-Op Bianbu, naast de modellen:
+On Bianbu, next to the models:
 
 ```bash
 sudo apt install python3-onnxruntime python3-soxr python3-numpy alsa-utils
@@ -32,6 +32,6 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now battybirdnet.service battybirdnet-web.service
 ```
 
-De service draait als `eessi` en krijgt de groep `audio` via `SupplementaryGroups`, omdat het ALSA-apparaat `root:audio` is. `BATFINDER_DIR` wijst naar een andere map als de scripts niet naast de modellen staan.
+The service runs as `eessi` and receives the `audio` group through `SupplementaryGroups`, because the ALSA device is `root:audio`. Set `BATFINDER_DIR` when the scripts do not sit next to the models.
 
-De pagina staat op poort 8090. `journalctl -u battybirdnet -f` toont de luisteraar. Bevestigingen komen ook in `hits.log`.
+The page is on port 8090. `journalctl -u battybirdnet -f` follows the listener. Confirmations are also appended to `hits.log`.
